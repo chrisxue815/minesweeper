@@ -1,4 +1,10 @@
 Minesweeper::Application.routes.draw do
+  resources :index, only: [:index]
+
+  namespace 'apiv1' do
+    resources :rooms, only: [:index, :create, :update]
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

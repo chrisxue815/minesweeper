@@ -4,10 +4,17 @@ class Apiv1::RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.new
+    user = request.session_options[:id]  #TODO
+    @room = Room.add(user)
   end
 
   def update
-    @room = Room.find(params[:id])
+    user = request.session_options[:id]  #TODO
+    id = params[:id]
+    @room = Room.add(user, id)
+  end
+
+  def destroy
+    Room.remove(user)
   end
 end

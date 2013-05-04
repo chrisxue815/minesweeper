@@ -1,0 +1,12 @@
+<p>post</p>
+
+<%= form_tag(apiv1_rooms_path, method: 'post') do %>
+  <p><%= submit_tag %></p>
+<% end %>
+
+<p>put</p>
+
+<%= form_tag(apiv1_rooms_path, method: 'put') do %>
+  <p><%= text_field_tag(:id) %></p>
+  <p><%= submit_tag %></p>
+<% end %>

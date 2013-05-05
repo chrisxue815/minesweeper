@@ -1,12 +1,33 @@
-<p>post</p>
+<p>index</p>
+
+<p><a href="/apiv1/rooms">/apiv1/rooms</a></p>
+
+<p>create</p>
 
 <%= form_tag(apiv1_rooms_path, method: 'post') do %>
   <p><%= submit_tag %></p>
 <% end %>
 
-<p>put</p>
+<p>join</p>
 
-<%= form_tag(apiv1_rooms_path, method: 'put') do %>
-  <p><%= text_field_tag(:id) %></p>
+<%= form_tag(apiv1_rooms_path, method: 'post') do %>
+  <p><%= text_field_tag(:id, 1) %></p>
+  <p><%= submit_tag %></p>
+<% end %>
+
+<p>show</p>
+
+<p><a href="/apiv1/rooms/current">/apiv1/rooms/current</a></p>
+
+<p>update</p>
+
+<%= form_tag(apiv1_room_path('current'), method: 'put') do %>
+  <p><%= text_field_tag(:ready, true) %></p>
+  <p><%= submit_tag %></p>
+<% end %>
+
+<p>update</p>
+
+<%= form_tag(apiv1_room_path('current'), method: 'destroy') do %>
   <p><%= submit_tag %></p>
 <% end %>

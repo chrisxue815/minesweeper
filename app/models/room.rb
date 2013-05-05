@@ -2,25 +2,29 @@ class Room
   MaxNumUsers = 2
   MaxNumRooms = 100
 
-  attr_accessor :id, :users, :game
+  attr_accessor :id, :users, :game, :state, :countdown
 
   def initialize(id)
     @id = id
     @users = Hash.new
     @game = Game.new
+    @state = :waiting
+    @countdown = 0
     @@rooms[id] = self
   end
 
-  def add(user)
+  def add_user(user)
     if @users.size < MaxNumUsers
+      user.leave_room
       user.room = self
       @users[user.name] = user
     end
   end
 
-  def self.create
-    id = first_available_room
-    Room.new(id) if id
+  def remove_user(user)
+    users.delete(user.name)
+    user.room = nil
+    @@rooms.delete(self.id) if users.size == 0
   end
 
   def self.all
@@ -32,10 +36,18 @@ class Room
   end
 
   def self.add(user, id = nil)
-    room = id ? Room.find(id) : Room.create
-    room.add(user) if room
+    if id
+      id = id.to_i
+      room = Room.find(id)
+      room = Room.new(id) unless room
+    else
+      id = first_available_room
+      room = Room.new(id) if id
+    end
 
-    return user.room
+    room.add_user(user) if room
+
+    user.room
   end
 
   private

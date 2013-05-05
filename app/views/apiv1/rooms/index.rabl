@@ -1,3 +1,7 @@
 collection @rooms
 
-extends 'apiv1/rooms/show'
+attributes :id
+
+node :num_users do |item|
+  item.users.count{ |x| x }
+end

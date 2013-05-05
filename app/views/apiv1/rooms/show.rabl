@@ -1,7 +1,7 @@
 object @room
 
-attributes :id
+attributes :id, :state, :countdown
 
-node :num_users do |item|
-  item.users.count{ |x| x }
+node :users do
+  @users
 end

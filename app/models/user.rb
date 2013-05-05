@@ -11,9 +11,14 @@ class User
     @@users[name]
   end
 
+  def enter_room(room)
+    room.add_user(self)
+  end
+
   def leave_room
-    @room.users.delete(self)
-    @room = nil
+    if @room
+      @room.remove_user(self)
+    end
   end
 
   private

@@ -37,8 +37,5 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
-# Ruby API builder language
-gem 'rabl'
-
-# JSON parser
-gem 'oj'
+# JSON builder
+gem 'jbuilder'

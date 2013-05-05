@@ -42,6 +42,9 @@ GEM
       multi_json (~> 1.0)
     hike (1.2.2)
     i18n (0.6.1)
+    jbuilder (1.4.0)
+      activesupport (>= 3.0.0)
+      multi_json (>= 1.2.0)
     journey (1.0.4)
     jquery-rails (2.2.1)
       railties (>= 3.0, < 5.0)
@@ -53,10 +56,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     multi_json (1.7.2)
-    oj (2.0.12)
     polyglot (0.3.3)
-    rabl (0.8.4)
-      activesupport (>= 2.3.14)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -108,9 +108,8 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  jbuilder
   jquery-rails
-  oj
-  rabl
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)
   sqlite3

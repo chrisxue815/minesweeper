@@ -14,13 +14,6 @@ class Apiv1::RoomsController < ApplicationController
     return if params[:id] != 'current'
 
     @room = @user.room
-    return unless @room
-
-    @users = Array.new
-
-    @room.users.each_value do |user|
-      @users.push {ready: user.ready}  #TODO: remove this ugly code
-    end
   end
 
   def update

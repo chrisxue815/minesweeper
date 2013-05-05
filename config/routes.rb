@@ -2,7 +2,8 @@ Minesweeper::Application.routes.draw do
   resources :index, only: [:index]
 
   namespace 'apiv1' do
-    resources :rooms, only: [:index, :create]
+    resources :rooms, only: [:index, :create, :update]
+    resources :current_room, only: [:index, :update, :destroy]
   end
 
   namespace 'test' do

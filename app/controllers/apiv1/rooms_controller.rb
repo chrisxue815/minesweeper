@@ -1,20 +1,17 @@
 class Apiv1::RoomsController < ApplicationController
+  before_filter :require_login
+
   def index
     @rooms = Room.all
   end
 
   def create
-    user = request.session_options[:id]  #TODO
-    @room = Room.add(user)
+    room = Room.add(@user)
+    @result = room ? 'succeeded' : 'failed'
   end
 
   def update
-    user = request.session_options[:id]  #TODO
-    id = params[:id]
-    @room = Room.add(user, id)
-  end
-
-  def destroy
-    Room.remove(user)
+    room = Room.add(@user, params[:id])
+    @result = room ? 'succeeded' : 'failed'
   end
 end

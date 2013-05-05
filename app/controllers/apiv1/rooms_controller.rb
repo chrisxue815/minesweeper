@@ -1,8 +1,6 @@
 class Apiv1::RoomsController < ApplicationController
   before_filter :require_login
 
-  NumSecondsCountdown = 5
-
   def index
     @rooms = Room.all
   end
@@ -15,8 +13,10 @@ class Apiv1::RoomsController < ApplicationController
   def show
     return if params[:id] != 'current'
 
-    @users = Hash.new
     @room = @user.room
+    return unless @room
+
+    @users = Hash.new
 
     @room.users.each_value do |user|
       @users[user.name] = {ready: user.ready}  #TODO: remove this ugly code
@@ -24,24 +24,19 @@ class Apiv1::RoomsController < ApplicationController
   end
 
   def update
+    @result = 'failed'
+
     return if params[:id] != 'current'
+    return unless params[:ready]
 
-    room = @user.room
-
-    if params[:ready]
-      @user.ready = params[:ready]
-
-      if room.state == :waiting
-        ready_users = room.users.select {|k,v| v.ready}
-        if ready_users.size == Room.MaxNumUsers
-          room.state = :countdown
-          room.countdown = Time.now + NumSecondsCountdown
-        end
-      end
-    end
+    ready = (params[:ready] == 'true' ? true : false)
+    @user.ready = ready
+    @result = 'succeeded'
   end
 
   def destroy
+    @result = 'failed'
+
     return if params[:id] != 'current'
 
     @user.leave_room

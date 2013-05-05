@@ -1,10 +1,14 @@
 class User
-  attr_accessor :room, :name, :ready
+  attr_accessor :name, :room
 
   def initialize(name)
     @name = name
-    @ready = false
     @@users[name] = self
+    self.reset
+  end
+
+  def reset
+    @ready = false
   end
 
   def self.find(name)
@@ -19,6 +23,15 @@ class User
     if @room
       @room.remove_user(self)
     end
+  end
+
+  def ready
+    @ready
+  end
+
+  def ready=(ready)
+    @ready = ready
+    @room.check_all_ready if ready && @room
   end
 
   private

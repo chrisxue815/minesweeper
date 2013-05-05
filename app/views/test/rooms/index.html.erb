@@ -19,14 +19,14 @@
 
 <p><a href="/apiv1/rooms/current">/apiv1/rooms/current</a></p>
 
-<p>update</p>
+<p>ready</p>
 
 <%= form_tag(apiv1_room_path('current'), method: 'put') do %>
   <p><%= text_field_tag(:ready, true) %></p>
   <p><%= submit_tag %></p>
 <% end %>
 
-<p>update</p>
+<p>leave</p>
 
 <%= form_tag(apiv1_room_path('current'), method: 'destroy') do %>
   <p><%= submit_tag %></p>

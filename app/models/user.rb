@@ -1,6 +1,15 @@
 class User
   attr_accessor :name, :room
 
+  def ready
+    @ready
+  end
+
+  def ready=(ready)
+    @ready = ready
+    @room.check_all_ready if ready && @room
+  end
+
   def initialize(name)
     @name = name
     @@users[name] = self
@@ -23,15 +32,6 @@ class User
     if @room
       @room.remove_user(self)
     end
-  end
-
-  def ready
-    @ready
-  end
-
-  def ready=(ready)
-    @ready = ready
-    @room.check_all_ready if ready && @room
   end
 
   private

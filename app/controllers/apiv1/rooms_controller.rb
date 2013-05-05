@@ -16,10 +16,10 @@ class Apiv1::RoomsController < ApplicationController
     @room = @user.room
     return unless @room
 
-    @users = Hash.new
+    @users = Array.new
 
     @room.users.each_value do |user|
-      @users[user.name] = {ready: user.ready}  #TODO: remove this ugly code
+      @users.push {ready: user.ready}  #TODO: remove this ugly code
     end
   end
 

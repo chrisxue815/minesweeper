@@ -3,10 +3,10 @@ class Game
   BoardHeight = 16
   NumMine = 40
 
-  attr_accessor :board
+  attr_accessor :grids
 
   def initialize
-    board = Hash.new(0)
+    @grids = Hash.new(0)
 
     num_mine = 0
 
@@ -14,8 +14,8 @@ class Game
       col = Random.rand(BoardWidth)
       row = Random.rand(BoardHeight)
 
-      if board[[col, row]] != :mine
-        board[[col, row]] = :mine
+      if @grids[[col, row]] != :mine
+        @grids[[col, row]] = :mine
         num_mine += 1
 
         top = row - 1
@@ -29,7 +29,7 @@ class Game
         neighbors.each do |grid|
           x = grid[0]
           y = grid[1]
-          board[[x, y]] += 1 if board[[x, y]] != :mine
+          @grids[[x, y]] += 1 if @grids[[x, y]] != :mine
         end
       end
     end

@@ -22,7 +22,7 @@ elsif @last_game
 
   json.me do
     json.name @user.name
-    json.num_opened = my_num_opened
+    json.num_opened my_num_opened
   end
 
   json.users @last_game do |key, value|

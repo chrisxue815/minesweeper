@@ -40,4 +40,5 @@ gem 'jquery-rails'
 # JSON builder
 gem 'jbuilder'
 
+gem 'devise'
 gem 'omniauth-openid'

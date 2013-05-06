@@ -2,7 +2,7 @@ var mines;
 var opponents;
 var me;
 var MineArea_x=280;
-var MineArea_y=50;
+var MineArea_y=0;
 var MineArea_width=500;
 var MineArea_height=500;
 var Mine_row = 16;
@@ -11,14 +11,12 @@ var Mine_Signed = 0;
 var Mine_Size = 30;
 var Mine_Count = 40;
 
-
 var background;
+
 function gamePageInit()
 {
-	
 	$("#RoomList").hide();
 	$("#RoomCanvas").show();
-	
 	
 	mines = new Array();
 	for(var i=0; i<Mine_row; i++)
@@ -28,11 +26,9 @@ function gamePageInit()
 			mines[i*Mine_col + j] = -2;
 		}
 	}
+	
 	opponents = new Array();
 	
-	context.fillStyle = 'black';
-	context.font = '20px Arial';
-	context.fillText('Opponents:', 10, 20);
 	GameState.status = 0;
 	
 	window.clearInterval(RoomListInterval);
@@ -108,6 +104,7 @@ function gameInfoLoop()
 function gameLoop()
 {
 	context.save(); 
+	
 	background = new Image();
 	background.src = 'image/background.gif';
 	
@@ -131,7 +128,6 @@ function gameLoop()
 	}
 	context.restore();
 }
-
 
 function GameState()
 {

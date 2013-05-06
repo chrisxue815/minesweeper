@@ -8,6 +8,7 @@ function ready(context, opponents)
 		for(var j=0; j<Mine_col; j++)
 		{
 			var mine = new Image();
+			
 			if(Math.floor(i*Mine_col + j) == Math.floor(GameState.hoverIndex)){
 				mine.src = 'image/highlight.gif';
 			}
@@ -22,22 +23,23 @@ function ready(context, opponents)
 	{
 		var oppBack = new Image();
 		oppBack.src = 'image/opponentBack.gif';
-		context.drawImage(oppBack, 30, 100 + 150*opponent, 120, 100);
+		context.drawImage(oppBack, 30, 30 + 150*opponent, 120, 100);
+		
 		var oppPro = new Image();
 		oppPro.src = 'image/opponentProcess.gif';
-		context.drawImage(oppPro, 31, 101 + 150*opponent, 118, 98);
+		context.drawImage(oppPro, 31, 31 + 150*opponent, 118, 98);
 		
 		context.fillStyle = 'black';
 		context.font = '20px Arial';
 		if(opponents[opponent].name.length>15)
 			opponents[opponent].name = opponents[opponent].name.substring(0,12)+"...";
-		context.fillText(opponents[opponent].name, 20, 220 + 150*opponent);
+		context.fillText(opponents[opponent].name, 20, 150 + 150*opponent);
 		
 		if(opponents[opponent].ready)
-			context.fillText("Ready!", 50, 150 + 150*opponent);
+			context.fillText("Ready!", 50, 80 + 150*opponent);
 		
 		else
-			context.fillText("Not Ready", 40, 150 + 150*opponent);
+			context.fillText("Not Ready", 40, 80 + 150*opponent);
 	}
 }
 
@@ -53,6 +55,7 @@ function counting(context)
 
 function playing(context, opponents, mines)
 {
+	$("#TimeSpent").html("Time Spent: "+GameState.Counting+" secs.");
 	var offset_x = MineArea_x + (MineArea_width - (Mine_Size*Mine_row))/2;
 	var offset_y = MineArea_y + (MineArea_height - (Mine_Size*Mine_col))/2;
 	
@@ -86,25 +89,25 @@ function playing(context, opponents, mines)
 	{
 		if(opponents[opponent].num_opened == 216)
 			lose(opponents[opponent].name);
+		
 		var oppBack = new Image();
 		oppBack.src = 'image/opponentBack.gif';
-		context.drawImage(oppBack, 30, 100 + 150*opponent, 120, 100);
+		context.drawImage(oppBack, 30, 30 + 150*opponent, 120, 100);
+		
 		var oppPro = new Image();
 		oppPro.src = 'image/opponentProcess.gif';
-		context.drawImage(oppPro, 31, 101 + 150*opponent + 98 - 98*opponents[opponent].num_opened/216, 118, 98*opponents[opponent].num_opened/216);
+		context.drawImage(oppPro, 31, 31 + 150*opponent + 98 - 98*opponents[opponent].num_opened/216, 118, 98*opponents[opponent].num_opened/216);
 		
 		context.fillStyle = 'black';
 		context.font = '20px Arial';
 		
 		if(opponents[opponent].name.length>15)
 			opponents[opponent].name = opponents[opponent].name.substring(0,12)+"...";
-		context.fillText(opponents[opponent].name, 20, 220 + 150*opponent);
+		context.fillText(opponents[opponent].name, 20, 150 + 150*opponent);
 		
-		context.fillText(Math.round((opponents[opponent].num_opened/216)*100)+"%", 60, 150 + 150*opponent);
+		context.fillText(Math.round((opponents[opponent].num_opened/216)*100)+"%", 60, 80 + 150*opponent);
 		
 	}
-	
-	
 }
 
 function toggleReady()
@@ -114,35 +117,34 @@ function toggleReady()
 		alert("Game Already Start!");
 		return;
 	}
-
-
-		var _data = {ready:true};
-		if(me.ready)
-		{
-			_data.ready=false;
-			me.ready = false;
-		}
-		else
-		{
-			me.ready = true;
-		}
+	
+	var _data = {ready:true};
+	if(me.ready)
+	{
+		_data.ready=false;
+		me.ready = false;
+	}
+	else
+	{
+		me.ready = true;
+	}
 		
-		$.ajax({ 
-			type:"put",
-			dataType:"json",
-			data:_data,
-			url:"/apiv1/rooms/current"
-		});
+	$.ajax({ 
+		type:"put",
+		dataType:"json",
+		data:_data,
+		url:"/apiv1/rooms/current"
+	});
 }
 
 
 function gameQuit()
 {
 	var quitFlag = window.confirm("Are you sure to quit the game?"); 
+	
 	if (quitFlag) { 
 		$.ajax({ 
-			type:"destroy",
-			dataType:"json",
+			type:"delete",
 			url:"/apiv1/rooms/current"
 		});
 		roomListInit();
@@ -157,22 +159,18 @@ function firstOpen(mines)
 			dataType:"text",
 			url:"/apiv1/games/current",
 			success:function(data){		
-				alert(data);
 				var _list = JSON.parse(data);
-				
 				for(var mineItem in _list)
 				{
 					var _x = _list[mineItem].x;
 					var _y = _list[mineItem].y;
 					var _value = _list[mineItem].value;
-					mines[_y*Mine_col + _x] = _value;
-					
+					mines[_y*Mine_col + _x] = _value;	
 				}
 			},
 			error:function(a,b,c){
 			}
 		});
-
 }
 
 function win()
@@ -189,7 +187,6 @@ function lose(winnerName)
 
 function open(_x,_y)
 {
-
 	alert("cc");
 	var _data = {operation:"open", x:_y, y:_x};
 	
@@ -201,7 +198,6 @@ function open(_x,_y)
 		success:function(data){		
 				alert(data);
 				var _list = JSON.parse(data);
-				
 				
 				for(var mineItem in _list)
 				{

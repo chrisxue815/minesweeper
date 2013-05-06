@@ -46,7 +46,7 @@ function gameInfoLoop()
 			type:"get",
 			contentType:"text/json",
 			dataType:"text",
-			url:"http://localhost:3000/apiv1/rooms/current",
+			url:"/apiv1/rooms/current",
 			success:function(data){		
 				
 				var _roomInfo = JSON.parse(data);

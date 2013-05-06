@@ -131,7 +131,7 @@ function toggleReady()
 			type:"put",
 			dataType:"json",
 			data:_data,
-			url:"http://localhost:3000/apiv1/rooms/current"
+			url:"/apiv1/rooms/current"
 		});
 }
 
@@ -143,7 +143,7 @@ function gameQuit()
 		$.ajax({ 
 			type:"destroy",
 			dataType:"json",
-			url:"http://localhost:3000/apiv1/rooms/current"
+			url:"/apiv1/rooms/current"
 		});
 		roomListInit();
 	}
@@ -155,7 +155,7 @@ function firstOpen(mines)
 			type:"get",
 			contentType:"text/json",
 			dataType:"text",
-			url:"http://localhost:3000/apiv1/games/current",
+			url:"/apiv1/games/current",
 			success:function(data){		
 				alert(data);
 				var _list = JSON.parse(data);
@@ -197,7 +197,7 @@ function open(_x,_y)
 		type:"put",
 		dataType:"text",
 		data:_data,
-		url:"http://localhost:3000/apiv1/games/current",
+		url:"/apiv1/games/current",
 		success:function(data){		
 				alert(data);
 				var _list = JSON.parse(data);
@@ -227,17 +227,22 @@ function open(_x,_y)
 function sign(_x,_y)
 {
 	var _data = {operation:"mark", x:_y, y:_x};
+	if(mines[_x*Mine_col + _y] == -1)
+	{
+		mines[_x*Mine_col + _y] = -2;
+		_data.operation = 'unmark';
+	}
+	else
+	{
+		mines[_x*Mine_col + _y] = -1;
+	}
 		
 	$.ajax({ 
 		type:"put",
 		dataType:"json",
 		data:_data,
-		url:"http://localhost:3000/apiv1/games/current"
+		url:"/apiv1/games/current"
 	});
-	if(mines[_x*Mine_col + _y] == -1)
-		mines[_x*Mine_col + _y] = -2;
-	else
-		mines[_x*Mine_col + _y] = -1;
 }
 
 function bomb()

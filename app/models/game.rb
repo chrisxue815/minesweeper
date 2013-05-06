@@ -42,11 +42,11 @@ class Game
     user_known_grids = open_blank(first_opened)
 
     @known_grids = Hash.new
-    @num_opened = Hash.new(0)
-
     users.each_key do |name|
       @known_grids[name] = user_known_grids.clone
     end
+
+    @num_opened = Hash.new(user_known_grids.size)
   end
 
   def open(username, x, y)
@@ -73,7 +73,25 @@ class Game
   end
 
   def mark(username, x, y)
-    @known_grids[username][[x, y]] = :marked
+    user_known_grids = known_grids[username]
+    current = [x, y]
+    if user_known_grids[current]
+      return false
+    else
+      user_known_grids[current] = :marked
+      return true
+    end
+  end
+
+  def unmark(username, x, y)
+    user_known_grids = known_grids[username]
+    current = [x, y]
+    if user_known_grids[current] == :mark
+      user_known_grids.delete(current)
+      return true
+    else
+      return false
+    end
   end
 
   # similar to A* algorithm

@@ -34,6 +34,10 @@ class User
     @room.game.mark(@name, x, y)
   end
 
+  def unmark(x, y)
+    @room.game.unmark(@name, x, y)
+  end
+
   def initialize(name)
     @name = name
     @@users[name] = self

@@ -38,11 +38,12 @@ class Game
     @initial_grids = open_blank(first_opened)
 
     @known_grids = Hash.new
+    @num_opened = Hash.new
+
     users.each_key do |name|
       @known_grids[name] = @initial_grids.clone
+      @num_opened[name] = @initial_grids.size
     end
-
-    @num_opened = Hash.new(@initial_grids.size)
   end
 
   def open(x, y, username = nil)

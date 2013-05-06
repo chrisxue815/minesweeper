@@ -8,10 +8,9 @@ class Game
   def initialize(users)
     @grids = Hash.new(0)
 
-    mine_left = NumMine
-    grid_left = BoardWidth * BoardHeight
-
     first_opened = [Random.rand(BoardWidth), Random.rand(BoardHeight)]
+    mine_left = NumMine
+    grid_left = BoardWidth * BoardHeight - neighbors(first_opened).size - 1
 
     for y in 0...BoardHeight
       for x in 0...BoardWidth
@@ -22,7 +21,7 @@ class Game
           @grids[current] = :mine
           mine_left -= 1
 
-          neighbors(current) do |neighbor|
+          neighbors(current).each do |neighbor|
             @grids[neighbor] += 1 if @grids[neighbor] != :mine
           end
 
@@ -33,7 +32,8 @@ class Game
 
     for y in 0...BoardHeight
       for x in 0...BoardWidth
-        print @grids[[x, y]]
+        grid = @grids[[x, y]]
+        print grid == :mine ? 'm' : grid
         print ' '
       end
       puts
@@ -94,7 +94,7 @@ class Game
       current = pending.delete_at(pending.size - 1)
       opened[current] = grids[current]
 
-      neighbors(current) do |neighbor|
+      neighbors(current).each do |neighbor|
         next if opened[neighbor]
 
         grid = grids[neighbor]
@@ -110,39 +110,28 @@ class Game
     return opened
   end
 
-  def neighbors(position, &block)
-    x = position[0]
-    y = position[1]
+  def neighbors(x, y = nil)
+    unless y
+      y = x[1]
+      x = x[0]
+    end
 
     left = x - 1
     right = x + 1
     top = y - 1
     bottom = y + 1
 
-    if block
-      yield_if_valid(left, top, &block)
-      yield_if_valid(x, top, &block)
-      yield_if_valid(right, top, &block)
-      yield_if_valid(right, y, &block)
-      yield_if_valid(right, bottom, &block)
-      yield_if_valid(x, bottom, &block)
-      yield_if_valid(left, bottom, &block)
-      yield_if_valid(left, y, &block)
-    else
-      result = Array.new
-      add_if_valid(left, top, result)
-      add_if_valid(x, top, result)
-      add_if_valid(right, top, result)
-      add_if_valid(right, y, result)
-      add_if_valid(right, bottom, result)
-      add_if_valid(x, bottom, result)
-      add_if_valid(left, bottom, result)
-      add_if_valid(left, x, result)
-    end
-  end
+    result = Array.new
+    add_if_valid(left, top, result)
+    add_if_valid(x, top, result)
+    add_if_valid(right, top, result)
+    add_if_valid(right, y, result)
+    add_if_valid(right, bottom, result)
+    add_if_valid(x, bottom, result)
+    add_if_valid(left, bottom, result)
+    add_if_valid(left, y, result)
 
-  def yield_if_valid(x, y)
-    yield(x, y) if x >= 0 && x < BoardWidth && y >= 0 && y < BoardHeight
+    return result
   end
 
   def add_if_valid(x, y, array)

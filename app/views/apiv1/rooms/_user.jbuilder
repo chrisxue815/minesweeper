@@ -1,2 +1,5 @@
 json.extract! user, :name, :ready
-json.num_opened user.num_opened
+
+if user.num_opened
+  json.num_opened user.num_opened
+end

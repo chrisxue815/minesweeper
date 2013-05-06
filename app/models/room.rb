@@ -3,7 +3,7 @@ class Room
   MaxNumRooms = 100
   NumSecondsCountdown = 5
 
-  attr_accessor :id, :users, :game, :state, :game_start_time
+  attr_accessor :id, :users, :game, :state, :game_start_time, :last_game
 
   def initialize(id)
     @id = id
@@ -41,6 +41,21 @@ class Room
       @game_start_time = Time.now + NumSecondsCountdown
       @game = Game.new(@users)
     end
+  end
+
+  def open(username, x, y)
+    return unless @game
+
+    opened = @game.open(username, x, y)
+
+    if @game.num_opened[username] == Game.NumSafeGrids
+      @last_game = Hash.new
+      @users.each do |item|
+        @last_game[item.name] = @game.num_opened[item.name]
+      end
+    end
+
+    return opened
   end
 
   def self.all

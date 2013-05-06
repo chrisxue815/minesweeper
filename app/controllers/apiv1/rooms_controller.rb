@@ -12,9 +12,12 @@ class Apiv1::RoomsController < ApplicationController
   end
 
   def show
-    return if params[:id] != 'current'
-
-    @room = @user.room
+    case params[:id]
+    when 'current'
+      @room = @user.room
+    when 'last'
+      @last_game = @user.room.last_game
+    end
   end
 
   def update

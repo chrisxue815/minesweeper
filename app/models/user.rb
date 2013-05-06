@@ -27,7 +27,7 @@ class User
   end
 
   def open(x, y)
-    @room.game.open(@name, x, y) if @room && @room.game
+    @room.open(@name, x, y) if @room
   end
 
   def mark(x, y)

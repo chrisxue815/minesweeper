@@ -1,7 +1,9 @@
 class Game
   BoardWidth = 16
   BoardHeight = 16
-  NumMine = 40
+  NumMines = 40
+  NumGrids = BoardWidth * BoardHeight
+  NumSafeGrids = NumGrids - NumMines
 
   attr_accessor :grids, :known_grids, :num_opened, :initial_grids
 
@@ -9,8 +11,8 @@ class Game
     @grids = Hash.new(0)
 
     first_opened = [Random.rand(BoardWidth), Random.rand(BoardHeight)]
-    mine_left = NumMine
-    grid_left = BoardWidth * BoardHeight - neighbors(first_opened).size - 1
+    mine_left = NumMines
+    grid_left = NumGrids - neighbors(first_opened).size - 1
 
     for y in 0...BoardHeight
       for x in 0...BoardWidth
@@ -54,7 +56,7 @@ class Game
   end
 
   def open(username, x, y)
-    user_known_grids = known_grids[username]
+    user_known_grids = @known_grids[username]
     current = [x, y]
     grid = grids[current]
 
@@ -85,7 +87,7 @@ class Game
       end
 
       if mine_opened
-        user_known_grids = @initial_grids.clone
+        @known_grids[username] = @initial_grids.clone
         @num_opened[username] = Hash.new(@initial_grids.size)
       end
     end
@@ -94,7 +96,7 @@ class Game
   end
 
   def mark(username, x, y)
-    user_known_grids = known_grids[username]
+    user_known_grids = @known_grids[username]
     current = [x, y]
     if user_known_grids[current]
       return false
@@ -105,7 +107,7 @@ class Game
   end
 
   def unmark(username, x, y)
-    user_known_grids = known_grids[username]
+    user_known_grids = @known_grids[username]
     current = [x, y]
     if user_known_grids[current] == :marked
       user_known_grids.delete(current)

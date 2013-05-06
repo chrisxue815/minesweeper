@@ -1,6 +1,6 @@
 class Apiv1::GamesController < ApplicationController
-  skip_before_filter :verify_authenticity_token
   before_filter :require_login
+  skip_before_filter :verify_authenticity_token
 
   def show
     return if params[:id] != 'current'

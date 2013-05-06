@@ -9,9 +9,10 @@ if @room
     json.time_played Time.now - @room.game_start_time
   end
 
-  json.users @room.users.values do |item|
-    if item != @user
-      json.partial! 'apiv1/rooms/user', user: item
-    end
+  other_users = @room.users.values
+  other_users.delete(@user)
+
+  json.users other_users do |item|
+    json.partial! 'apiv1/rooms/user', user: item
   end
 end

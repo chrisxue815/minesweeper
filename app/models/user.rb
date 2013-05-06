@@ -22,6 +22,10 @@ class User
     @room.game.known_grids[@name]
   end
 
+  def num_opened
+    @room.game.num_opened[@name] if @room && @room.game
+  end
+
   def open(x, y)
     @room.game.open(@name, x, y)
   end

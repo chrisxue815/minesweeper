@@ -3,7 +3,7 @@ class Game
   BoardHeight = 16
   NumMine = 40
 
-  attr_accessor :grids, :known_grids
+  attr_accessor :grids, :known_grids, :num_opened
 
   def initialize(users)
     @grids = Hash.new(0)
@@ -42,6 +42,7 @@ class Game
     user_known_grids = open_blank(first_opened)
 
     @known_grids = Hash.new
+    @num_opened = Hash.new(0)
 
     users.each_key do |name|
       @known_grids[name] = user_known_grids.clone
@@ -64,6 +65,7 @@ class Game
         opened.delete(position)
       else
         user_known_grids[position] = value
+        opened[username] += 1
       end
     end
 

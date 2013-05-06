@@ -31,3 +31,17 @@
 <%= form_tag(apiv1_room_path('current'), method: 'destroy') do %>
   <p><%= submit_tag %></p>
 <% end %>
+
+<p>show game</p>
+
+<p><a href="/apiv1/games/current">/apiv1/games/current</a></p>
+
+<p>click</p>
+
+<%= form_tag(apiv1_game_path('current'), method: 'put') do %>
+  <p>
+    <label><input type="radio" name="operation" value="open" checked="checked" />Open</label>
+    <label><input type="radio" name="operation" value="mark" />Mark</label>
+  </p>
+  <p><%= submit_tag %></p>
+<% end %>

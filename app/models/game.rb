@@ -55,30 +55,36 @@ class Game
     current = [x, y]
     grid = grids[current]
 
-    if grid.nil?
-      opened = {current => grid}
-    if grid == 0
-      opened = open_blank(x, y, user_known_grids)
-    elsif grid > 0
-      auto_open
-    end
-
-    opened.each do |position, value|
-      if value == :mine
-        mine_opened = true
+    if user_known_grids[current]
+      if user_known_grids[current] != :marked
+        auto_open(x, y, user_known_grids)
       end
-
-      if user_known_grids[position]
-        opened.delete(position)
+    else
+      if grid == 0
+        opened = open_blank(x, y, user_known_grids)
       else
-        user_known_grids[position] = value
-        @num_opened[username] += 1
+        opened = {current => grid}
       end
     end
 
-    if mine_opened
-      user_known_grids = @initial_grids.clone
-      @num_opened[username] = Hash.new(@initial_grids.size)
+    if opened
+      mine_opened = false
+
+      opened.each do |position, value|
+        mine_opened = true if value == :mine
+
+        if user_known_grids[position]
+          opened.delete(position)
+        else
+          user_known_grids[position] = value
+          @num_opened[username] += 1
+        end
+      end
+
+      if mine_opened
+        user_known_grids = @initial_grids.clone
+        @num_opened[username] = Hash.new(@initial_grids.size)
+      end
     end
 
     return opened
@@ -98,7 +104,7 @@ class Game
   def unmark(username, x, y)
     user_known_grids = known_grids[username]
     current = [x, y]
-    if user_known_grids[current] == :mark
+    if user_known_grids[current] == :marked
       user_known_grids.delete(current)
       return true
     else

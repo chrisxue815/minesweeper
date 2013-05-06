@@ -18,9 +18,11 @@ class Apiv1::GamesController < ApplicationController
     when 'open'
       @grids = @user.open(x, y)
     when 'mark'
-      @result = @user.mark(x, y)
+      result = @user.mark(x, y)
+      @result = result ? 'succeeded' : 'failed'
     when 'unmark'
-      @result = @user.unmark(x, y)
+      result = @user.unmark(x, y)
+      @result = result ? 'succeeded' : 'failed'
     end
   end
 end

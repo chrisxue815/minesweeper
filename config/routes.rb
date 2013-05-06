@@ -1,4 +1,5 @@
 Minesweeper::Application.routes.draw do
+	root :to => 'index#index'
   resources :index, only: [:index]
 
   namespace 'apiv1' do

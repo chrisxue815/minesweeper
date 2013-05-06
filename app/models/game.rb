@@ -32,6 +32,7 @@ class Game
         end
 
         grid_left -= 1
+				break if grid_left <= 0
       end
     end
 

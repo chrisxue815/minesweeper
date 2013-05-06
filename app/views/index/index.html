@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Minesweeper Game</title>
+		<link href="css/GamePage.css" rel="stylesheet" type="text/css"/>
+		<link href="css/RoomList.css" rel="stylesheet" type="text/css"/>
+		<script src='js/init.js'></script>
+		<script src='js/GameUtil.js'></script>
+		<script src='js/RoomListUtil.js'></script>
+		<script src='js/GameLogic.js'></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
+		<script src="js/jsonRef/json2.js"></script>
+  </head>
+	<body>
+	
+	<div data-role="page" id="RoomList">
+		<div class="top">
+				<span class="title">Room List:</span>
+				<button style='margin-left:400px;height:30px;' onclick='createRoom()'>Create a Room</button>
+		</div>
+		<div class="center">
+			<ul id="RoomListInfo" class="RoomInfoList">
+			</ul>
+		</div>
+		
+	</div>
+  <div id="loading"></div>
+	<div data-role="page" id="RoomCanvas" >
+		<div class="top">
+			<div>
+				<span id="GameUserName" class="title">Hello:</span>
+				<span id="TimeSpent" style='margin-left:400px;height:30px;' class="title"></span>
+			</div>
+			<div>
+				<span id="GameRoomID"  class="title"></span>
+			</div>
+		</div>
+		<div class="center">
+			
+			<canvas id='myCanvas' width='800' height='550'>
+			</canvas>
+			<table style='margin-left:450px;'>
+				<tr>
+					<td><button id="readyBtn" style='height:50px; width:150px;' onclick='toggleReady()'>Ready</button></td>
+					<td><button style='height:50px; width:150px;' onclick='gameQuit()'>Quit</button></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	
+	
+	
+  </body>
+</html>

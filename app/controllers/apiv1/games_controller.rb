@@ -4,7 +4,7 @@ class Apiv1::GamesController < ApplicationController
   def show
     return if params[:id] != 'current'
 
-    @known_grids = @user.known_grids
+    @grids = @user.known_grids
   end
 
   def update
@@ -15,9 +15,9 @@ class Apiv1::GamesController < ApplicationController
 
     case params[:operation]
     when 'open'
-      @user.open(x, y)
+      @grids = @user.open(x, y)
     when 'mark'
-      @user.mark(x, y)
+      @result = @user.mark(x, y)
     end
   end
 end

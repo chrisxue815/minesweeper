@@ -20,6 +20,10 @@ function roomListLoop()
 				var _list = JSON.parse(data);
 				
 				$("#RoomListInfo").html('');
+				if(_list.length==0)
+				{
+					$("#RoomListInfo").html('No Room Existing, You can create one.');
+				}
 				for(var roomItem in _list)
 				{
 					var _id = _list[roomItem].id;
@@ -28,8 +32,8 @@ function roomListLoop()
 						"<li class='RoomInfoListCell'>"+
 						"<span class='RoomInfoListCellItem ui-icon ui-icon-arrowthick-2-n-s'></span>"+
 						"<span class='RoomInfoListCellItem' style='margin-left:10px;'>Room "+_id+"</span>"+
-						"<span class='RoomInfoListCellItem' style='margin-left:150px;'>Player "+_num_users+"/2</span>"+
-						"<button class='RoomInfoListCellItem' style='margin-left:250px;' onclick='gotoRoom("+_id+")'>Enter</button>"+
+						"<span class='RoomInfoListCellItem' style='margin-left:200px;'>Player "+_num_users+"/2</span>"+
+						"<button class='RoomInfoListCellItem' style='margin-left:350px;' onclick='gotoRoom("+_id+")'>Enter</button>"+
 						"</li>");
 				}
 			},
@@ -82,10 +86,6 @@ function createRoom()
 				if(_result.result=="succeeded")
 				{
 					gamePageInit();
-				}
-				else
-				{
-					
 				}
 				
 				$("#loading").hide();

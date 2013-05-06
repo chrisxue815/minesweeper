@@ -19,7 +19,7 @@
 				<span class="title">Room List:</span>
 				<button style='margin-left:400px;height:30px;' onclick='createRoom()'>Create a Room</button>
 		</div>
-		<div class="center">
+		<div class="center" style='padding-top:30px'>
 			<ul id="RoomListInfo" class="RoomInfoList">
 			</ul>
 		</div>
@@ -30,27 +30,24 @@
 		<div class="top">
 			<div>
 				<span id="GameUserName" class="title">Hello:</span>
-				<span id="TimeSpent" style='margin-left:400px;height:30px;' class="title"></span>
 			</div>
 			<div>
 				<span id="GameRoomID"  class="title"></span>
+				<span id="TimeSpent" style='margin-left:400px;height:30px;' class="title"></span>
 			</div>
 		</div>
 		<div class="center">
-			
-			<canvas id='myCanvas' width='800' height='550'>
-			</canvas>
-			<table style='margin-left:450px;'>
+			<table>
 				<tr>
-					<td><button id="readyBtn" style='height:50px; width:150px;' onclick='toggleReady()'>Ready</button></td>
-					<td><button style='height:50px; width:150px;' onclick='gameQuit()'>Quit</button></td>
+					<td><span class="title" style='color:black'>Opponents:</span></td>
+					<td><button id="readyBtn" style='margin-left:300px; height:50px; width:150px;' onclick='toggleReady()'>Ready</button></td>
+					<td><button style='margin-left:50px; height:50px; width:150px;' onclick='gameQuit()'>Quit</button></td>
 				</tr>
 			</table>
+			<canvas id='myCanvas' width='800' height='550'>
+			</canvas>
+			
 		</div>
 	</div>
-	
-	
-	
-	
   </body>
 </html>

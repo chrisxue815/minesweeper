@@ -16,8 +16,6 @@ function init()
 	roomListInit();
 }
 
-
-
 function mousemove(e)
 {
 	var offset_X = e.clientX-$('#myCanvas').position().left+window.pageXOffset
@@ -33,6 +31,7 @@ function mousemove(e)
 		GameState.hoverIndex=-1;
 	}
 }
+
 function mouseup(e)
 {
 	if(GameState.status==2 && !GameState.IsLocking)
@@ -60,9 +59,9 @@ function mouseup(e)
 			GameState.IsLocking=true;
 			open(_x,_y);
 		}
-		
 	}
 }
+
 function dblclick(e)
 {
 	if(GameState.status==2 && !GameState.IsLocking)
@@ -73,11 +72,10 @@ function dblclick(e)
 									- MineArea_y - (MineArea_height - (Mine_Size*Mine_row))/2;
 		var _x = Math.floor(offset_Y/Mine_Size);
 		var _y = Math.floor(offset_X/Mine_Size);
-		
-		
+	
 		GameState.IsLocking=true;
 		open(_x,_y);
-		
 	}
 }
+
 window.onload = init;

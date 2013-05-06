@@ -41,3 +41,5 @@ gem 'jquery-rails'
 gem 'jbuilder'
 
 gem 'omniauth-openid'
+
+gem 'unicorn'

@@ -22,7 +22,9 @@
 <p>ready</p>
 
 <%= form_tag(apiv1_room_path('current'), method: 'put') do %>
-  <p><%= text_field_tag(:ready, true) %></p>
+  <p>
+    <label><%= check_box_tag(:ready, true, true) %>Ready</label>
+  </p>
   <p><%= submit_tag %></p>
 <% end %>
 
@@ -42,6 +44,11 @@
   <p>
     <label><input type="radio" name="operation" value="open" checked="checked" />Open</label>
     <label><input type="radio" name="operation" value="mark" />Mark</label>
+    <label><input type="radio" name="operation" value="unmark" />Unmark</label>
+  </p>
+  <p>
+    <label>X: <input type="text" name="x" value="8" /></label>
+    <label>Y: <input type="text" name="y" value="8" /></label>
   </p>
   <p><%= submit_tag %></p>
 <% end %>

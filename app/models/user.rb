@@ -19,7 +19,7 @@ class User
   end
 
   def known_grids
-    @room.game.known_grids[@name]
+    @room.game.known_grids[@name] if @room && @room.game
   end
 
   def num_opened
@@ -27,15 +27,15 @@ class User
   end
 
   def open(x, y)
-    @room.game.open(@name, x, y)
+    @room.game.open(@name, x, y) if @room && @room.game
   end
 
   def mark(x, y)
-    @room.game.mark(@name, x, y)
+    @room.game.mark(@name, x, y) if @room && @room.game
   end
 
   def unmark(x, y)
-    @room.game.unmark(@name, x, y)
+    @room.game.unmark(@name, x, y) if @room && @room.game
   end
 
   def initialize(name)

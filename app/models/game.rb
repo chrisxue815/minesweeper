@@ -30,6 +30,7 @@ class Game
       end
     end
 
+    #TODO
     for y in 0...BoardHeight
       for x in 0...BoardWidth
         grid = @grids[[x, y]]
@@ -65,7 +66,7 @@ class Game
         opened.delete(position)
       else
         user_known_grids[position] = value
-        opened[username] += 1
+        num_opened[username] += 1
       end
     end
 

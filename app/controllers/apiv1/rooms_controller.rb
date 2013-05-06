@@ -21,7 +21,6 @@ class Apiv1::RoomsController < ApplicationController
     @result = 'failed'
 
     return if params[:id] != 'current'
-    return unless params[:ready]
 
     ready = (params[:ready] == 'true' ? true : false)
     @user.ready = ready

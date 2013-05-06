@@ -14,7 +14,7 @@ function roomListLoop()
 			type:"get",
 			contentType:"text/json",
 			dataType:"text",
-			url:"http://localhost:3000/apiv1/rooms",
+			url:"/apiv1/rooms",
 			success:function(data){		
 				
 				var _list = JSON.parse(data);
@@ -47,7 +47,7 @@ function gotoRoom(roomID)
 			type:"post",
 			dataType:"text",
 			data:_data,
-			url:"http://localhost:3000/apiv1/rooms",
+			url:"/apiv1/rooms",
 			success:function(data){	
 				
 				var _result = JSON.parse(data);
@@ -76,7 +76,7 @@ function createRoom()
 			type:"post",
 			contentType:"text/json",
 			dataType:"text",
-			url:"http://localhost:3000/apiv1/rooms",
+			url:"/apiv1/rooms",
 			success:function(data){		
 				var _result = JSON.parse(data);
 				if(_result.result=="succeeded")

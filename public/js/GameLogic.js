@@ -187,7 +187,7 @@ function lose(winnerName)
 
 function open(_x,_y)
 {
-	alert("cc");
+	
 	var _data = {operation:"open", x:_y, y:_x};
 	
 	$.ajax({ 
@@ -196,7 +196,7 @@ function open(_x,_y)
 		data:_data,
 		url:"/apiv1/games/current",
 		success:function(data){		
-				alert(data);
+				
 				var _list = JSON.parse(data);
 				
 				for(var mineItem in _list)

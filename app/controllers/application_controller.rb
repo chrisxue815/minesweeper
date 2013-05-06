@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   #TODO
   def require_login
-    username = request.session_options[:id]
-    @user = User.find(username) || User.new(username)
+    @user = current_user
   end
 end

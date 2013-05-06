@@ -1,4 +1,5 @@
 class Apiv1::GamesController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :require_login
   skip_before_filter :verify_authenticity_token
 

@@ -57,7 +57,7 @@ class Room
     return if @game.num_opened[username] < Game::NumSafeGrids
 
     @last_game = Hash.new
-    @users.each do |item|
+    @users.each_value do |item|
       @last_game[item.name] = @game.num_opened[item.name]
       item.ready = false
     end

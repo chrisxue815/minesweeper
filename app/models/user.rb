@@ -7,7 +7,27 @@ class User
 
   def ready=(ready)
     @ready = ready
-    @room.check_all_ready if ready && @room
+    @room.start_if_all_ready if ready && @room
+  end
+
+  def game
+    @room.game
+  end
+
+  def grids
+    @room.game.grids
+  end
+
+  def known_grids
+    @room.game.known_grids[@name]
+  end
+
+  def open(x, y)
+    @room.game.open(@name, x, y)
+  end
+
+  def mark(x, y)
+    @room.game.mark(@name, x, y)
   end
 
   def initialize(name)

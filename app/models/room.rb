@@ -8,12 +8,13 @@ class Room
   def initialize(id)
     @id = id
     @users = Hash.new
-    @game = Game.new
     @state = :waiting
     @@rooms[id] = self
   end
 
   def add_user(user)
+    return if @state == :running
+
     if @users.size < MaxNumUsers
       user.leave_room
       user.reset
@@ -23,18 +24,22 @@ class Room
   end
 
   def remove_user(user)
-    users.delete(user.name)
+    return if @state == :running
+
+    @users.delete(user.name)
     user.room = nil
-    @@rooms.delete(self.id) if users.size == 0
+    @@rooms.delete(self.id) if @users.size == 0
   end
 
-  def check_all_ready
-    if @state == :waiting
-      ready_users = @users.select {|k,v| v.ready}
-      if ready_users.size == MaxNumUsers
-        @state = :running
-        @game_start_time = Time.now + NumSecondsCountdown
-      end
+  def start_if_all_ready
+    return if @state == :running
+
+    ready_users = @users.select {|k,v| v.ready}
+
+    if ready_users.size == MaxNumUsers
+      @state = :running
+      @game_start_time = Time.now + NumSecondsCountdown
+      @game = Game.new(@users)
     end
   end
 

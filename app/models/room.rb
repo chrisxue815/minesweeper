@@ -56,9 +56,9 @@ class Room
   def restart_if_win(username)
     return if @game.num_opened[username] < Game::NumSafeGrids
 
-    @last_game = Hash.new
+    @last_game = @game.num_opened
+
     @users.each_value do |item|
-      @last_game[item.name] = @game.num_opened[item.name]
       item.ready = false
     end
 

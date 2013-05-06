@@ -18,14 +18,15 @@ if @room
     end
   end
 elsif @last_game
-  my_num_opened = @last_game.delete(@user.name)
+  other_users = @last_game.clone
+  me = other_users.delete(@user.name)
 
   json.me do
     json.name @user.name
-    json.num_opened my_num_opened
+    json.num_opened me
   end
 
-  json.users @last_game do |key, value|
+  json.users other_users do |key, value|
     json.name key
     json.num_opened value
   end

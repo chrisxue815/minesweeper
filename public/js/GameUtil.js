@@ -13,6 +13,7 @@ var Mine_Count = 40;
 
 var background;
 
+// game page init method
 function gamePageInit()
 {
 	$("#RoomList").hide();
@@ -36,6 +37,8 @@ function gamePageInit()
 	GameInfoLoopInterval = setInterval(gameInfoLoop,1000);
 }
 
+
+// game info loop, run every second to get the room's information
 function gameInfoLoop()
 {
 	$.ajax({ 
@@ -49,13 +52,12 @@ function gameInfoLoop()
 				
 				if(_roomInfo.state == "waiting")
 				{	
+					// if the game is back to waiting, restart the game
 					if(GameState.status==2)
 					{
 							restart();
 					}
-					
 					GameState.status=0;
-					
 				}
 				else if(_roomInfo.state == "running")
 				{
@@ -103,6 +105,7 @@ function gameInfoLoop()
 		});
 }
 
+// run game loop to draw 
 function gameLoop()
 {
 	context.save(); 
@@ -131,6 +134,7 @@ function gameLoop()
 	context.restore();
 }
 
+// Game State infos
 function GameState()
 {
 	GameState.status=0;

@@ -1,8 +1,11 @@
+
+// when game is ready, draw this method
 function ready(context, opponents)
 {
 	var offset_x = MineArea_x + (MineArea_width - (Mine_Size*Mine_row))/2;
 	var offset_y = MineArea_y + (MineArea_height - (Mine_Size*Mine_col))/2;
 	
+	// display all the mines
 	for(var i=0; i<Mine_row; i++)
 	{
 		for(var j=0; j<Mine_col; j++)
@@ -19,6 +22,7 @@ function ready(context, opponents)
 		}
 	}
 	
+	// display all the opponents
 	for(var opponent in opponents)
 	{
 		var oppBack = new Image();
@@ -29,12 +33,14 @@ function ready(context, opponents)
 		oppPro.src = 'image/opponentProcess.gif';
 		context.drawImage(oppPro, 31, 31 + 150*opponent, 118, 98);
 		
+		// display opponent's name
 		context.fillStyle = 'black';
 		context.font = '20px Arial';
 		if(opponents[opponent].name.length>15)
 			opponents[opponent].name = opponents[opponent].name.substring(0,12)+"...";
 		context.fillText(opponents[opponent].name, 20, 150 + 150*opponent);
 		
+		// whether he is ready
 		if(opponents[opponent].ready)
 			context.fillText("Ready!", 50, 80 + 150*opponent);
 		
@@ -43,6 +49,7 @@ function ready(context, opponents)
 	}
 }
 
+// when the game is counting down to start
 function counting(context)
 {
 		if(GameState.Counting>=0)
@@ -53,6 +60,7 @@ function counting(context)
 		}
 }
 
+// when the game is playing
 function playing(context, opponents, mines)
 {
 	$("#TimeSpent").html("Time Spent: "+GameState.Counting+" secs.");
@@ -107,6 +115,7 @@ function playing(context, opponents, mines)
 	}
 }
 
+// set ready or cancel
 function toggleReady()
 {
 	if(GameState.status!=0)
@@ -148,6 +157,7 @@ function gameQuit()
 	}
 }
 
+// when the game starts, the system first open a block automatically
 function firstOpen(mines)
 {
 	$.ajax({ 
@@ -170,6 +180,7 @@ function firstOpen(mines)
 		});
 }
 
+// restart all the blocks
 function restart()
 {
 	for(var i=0; i<Mine_row; i++)
@@ -223,6 +234,8 @@ function lose(winnerName)
 	GameState.status=0;
 }
 
+
+// left click on the block to open it
 function open(_x,_y)
 {
 	var _data = {operation:"open", x:_y, y:_x};
@@ -242,6 +255,8 @@ function open(_x,_y)
 					var _y = _list[mineItem].y;
 					var _value = _list[mineItem].value;
 					mines[_y*Mine_col + _x] = _value;
+					
+					// if it is a mine, call bomb method
 					if(_value == "mine")
 					{
 						mines[_y*Mine_col + _x] = 9;
@@ -257,6 +272,7 @@ function open(_x,_y)
 	});
 }
 
+// right click on the block, to sign or unsign it
 function sign(_x,_y)
 {
 	var _data = {operation:"mark", x:_y, y:_x};
@@ -278,6 +294,7 @@ function sign(_x,_y)
 	});
 }
 
+// when click on a mine, call it
 function bomb()
 {
 	alert("Sorry, you click the mine! Restart Again!");

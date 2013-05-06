@@ -1,4 +1,5 @@
 
+// room list page init method
 function roomListInit()
 {
 	$("#RoomList").show();
@@ -8,6 +9,8 @@ function roomListInit()
 	RoomListInterval = setInterval(roomListLoop,1000);
 }
 
+
+// run loop every second to get the rooms' list
 function roomListLoop()
 {
 	$.ajax({ 
@@ -42,6 +45,7 @@ function roomListLoop()
 		});
 }
 
+// go to a room
 function gotoRoom(roomID)
 {
 	var _data = {id:roomID};
@@ -73,6 +77,7 @@ function gotoRoom(roomID)
 		});
 }
 
+//create a room
 function createRoom()
 {
 	$("#loading").show();

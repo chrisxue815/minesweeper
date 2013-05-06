@@ -27,15 +27,15 @@ class User
   end
 
   def open(x, y)
-    @room.open(@name, x, y) if @room
+    @room.open(x, y, @name) if @room
   end
 
   def mark(x, y)
-    @room.game.mark(@name, x, y) if @room && @room.game
+    @room.game.mark(x, y, @name) if @room && @room.game
   end
 
   def unmark(x, y)
-    @room.game.unmark(@name, x, y) if @room && @room.game
+    @room.game.unmark(x, y, @name) if @room && @room.game
   end
 
   def initialize(name)

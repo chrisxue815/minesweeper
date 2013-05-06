@@ -18,7 +18,6 @@ class Game
       for x in 0...BoardWidth
         current = [x, y]
         rand = Random.rand(grid_left)
-        puts "#{rand} / #{mine_left} / #{grid_left} / #{!neighbor?(current, first_opened)}"
 
         if rand < mine_left && !neighbor?(current, first_opened)
           @grids[current] = :mine
@@ -36,16 +35,6 @@ class Game
       end
     end
 
-    #TODO
-    for y in 0...BoardHeight
-      for x in 0...BoardWidth
-        grid = @grids[[x, y]]
-        print grid == :mine ? 'm' : grid
-        print ' '
-      end
-      puts
-    end
-
     @initial_grids = open_blank(first_opened)
 
     @known_grids = Hash.new
@@ -56,22 +45,16 @@ class Game
     @num_opened = Hash.new(@initial_grids.size)
   end
 
-  def open(username, x, y)
-    user_known_grids = @known_grids[username]
-    current = [x, y]
-    grid = grids[current]
-
-    if user_known_grids[current]
-      if user_known_grids[current] != :marked
-        auto_open(x, y, user_known_grids)
-      end
-    else
-      if grid == 0
-        opened = open_blank(x, y, user_known_grids)
-      else
-        opened = {current => grid}
-      end
+  def open(x, y, username = nil)
+    unless username
+      username = y
+      y = x[1]
+      x = x[0]
     end
+
+    user_known_grids = known_grids[username]
+
+    opened = open_grid(x, y, username)
 
     if opened
       mine_opened = false
@@ -89,14 +72,14 @@ class Game
 
       if mine_opened
         @known_grids[username] = @initial_grids.clone
-        @num_opened[username] = Hash.new(@initial_grids.size)
+        @num_opened[username] = @initial_grids.size
       end
     end
 
     return opened
   end
 
-  def mark(username, x, y)
+  def mark(x, y, username)
     user_known_grids = @known_grids[username]
     current = [x, y]
     if user_known_grids[current]
@@ -107,7 +90,7 @@ class Game
     end
   end
 
-  def unmark(username, x, y)
+  def unmark(x, y, username)
     user_known_grids = @known_grids[username]
     current = [x, y]
     if user_known_grids[current] == :marked
@@ -116,6 +99,32 @@ class Game
     else
       return false
     end
+  end
+
+  def open_grid(x, y, username = nil)
+    unless username
+      username = y
+      y = x[1]
+      x = x[0]
+    end
+
+    current = [x, y]
+    grid = grids[current]
+    user_known_grids = known_grids[username]
+
+    if user_known_grids[current]
+      if user_known_grids[current] != :marked
+        opened = auto_open(x, y, username)
+      end
+    else
+      if grid == 0
+        opened = open_blank(x, y, user_known_grids)
+      else
+        opened = {current => grid}
+      end
+    end
+
+    return opened
   end
 
   # similar to A* algorithm
@@ -155,17 +164,35 @@ class Game
     return opened
   end
 
-  def auto_open(x, y = nil, user_known_grids = nil)
-    unless user_known_grids
-      user_known_grids = Hash.new
-    end
-
-    unless y
+  def auto_open(x, y, username = nil)
+    unless username
+      username = y
       y = x[1]
       x = x[0]
     end
 
+    user_known_grids = known_grids[username]
+    current = [x, y]
+    grid = grids[current]
+    neighbor_list = neighbors(current)
+    known_mines = 0
 
+    neighbor_list.each do |neighbor|
+      known_mines += 1 if user_known_grids[neighbor] == :marked
+    end
+
+    return if known_mines != grid
+
+    all_opened = Hash.new
+
+    neighbor_list.each do |neighbor|
+      unless user_known_grids[neighbor]
+        opened = open_grid(neighbor, username)
+        all_opened.merge!(opened)
+      end
+    end
+
+    return all_opened
   end
 
   def neighbors(x, y = nil)

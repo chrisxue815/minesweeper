@@ -43,19 +43,28 @@ class Room
     end
   end
 
-  def open(username, x, y)
+  def open(x, y, username)
     return unless @game
 
-    opened = @game.open(username, x, y)
+    opened = @game.open(x, y, username)
 
-    if @game.num_opened[username] == Game::NumSafeGrids
-      @last_game = Hash.new
-      @users.each do |item|
-        @last_game[item.name] = @game.num_opened[item.name]
-      end
-    end
+    restart_if_win(username)
 
     return opened
+  end
+
+  def restart_if_win(username)
+    return if @game.num_opened[username] < Game::NumSafeGrids
+
+    @last_game = Hash.new
+    @users.each do |item|
+      @last_game[item.name] = @game.num_opened[item.name]
+      item.ready = false
+    end
+
+    @state = :waiting
+    @game = nil
+    @game_start_time = nil
   end
 
   def self.all

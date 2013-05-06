@@ -16,6 +16,7 @@ class Game
       for x in 0...BoardWidth
         current = [x, y]
         rand = Random.rand(grid_left)
+        puts "#{rand} / #{mine_left} / #{grid_left} / #{!neighbor?(current, first_opened)}"
 
         if rand < mine_left && !neighbor?(current, first_opened)
           @grids[current] = :mine
@@ -27,6 +28,8 @@ class Game
 
           break if mine_left == 0
         end
+
+        grid_left -= 1
       end
     end
 

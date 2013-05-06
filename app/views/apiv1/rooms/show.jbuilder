@@ -24,10 +24,11 @@ elsif @last_game
   json.me do
     json.name @user.name
     json.num_opened me
+    json.test other_users.size
   end
 
-  json.users other_users do |key, value|
+  json.users other_users.keys do |key|
     json.name key
-    json.num_opened value
+    json.num_opened other_users[key]
   end
 end

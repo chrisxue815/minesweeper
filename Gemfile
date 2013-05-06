@@ -40,4 +40,4 @@ gem 'jquery-rails'
 # JSON builder
 gem 'jbuilder'
 
-gem 'omniauth-facebook'
+gem 'omniauth-openid'

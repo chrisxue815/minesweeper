@@ -48,8 +48,14 @@ function gameInfoLoop()
 				var _roomInfo = JSON.parse(data);
 				
 				if(_roomInfo.state == "waiting")
-				{
+				{	
+					if(GameState.status==2)
+					{
+							restart();
+					}
+					
 					GameState.status=0;
+					
 				}
 				else if(_roomInfo.state == "running")
 				{
@@ -67,10 +73,6 @@ function gameInfoLoop()
 					{
 						GameState.Counting = Math.floor(_roomInfo.time_played);
 						GameState.status=2;
-						if(_roomInfo.me.num_opened==216)
-						{
-							win();
-						}
 					}
 				}
 				$("#GameUserName").html("Hello: "+_roomInfo.me.name);

@@ -87,9 +87,6 @@ function playing(context, opponents, mines)
 	
 	for(var opponent in opponents)
 	{
-		if(opponents[opponent].num_opened == 216)
-			lose(opponents[opponent].name);
-		
 		var oppBack = new Image();
 		oppBack.src = 'image/opponentBack.gif';
 		context.drawImage(oppBack, 30, 30 + 150*opponent, 120, 100);
@@ -171,6 +168,34 @@ function firstOpen(mines)
 			error:function(a,b,c){
 			}
 		});
+}
+
+function restart()
+{
+	for(var i=0; i<Mine_row; i++)
+	{
+		for(var j=0; j<Mine_col; j++)
+		{
+			mines[i*Mine_col + j] = -2;
+		}
+	}
+	$("#TimeSpent").html("");
+	
+	$.ajax({ 
+			type:"get",
+			contentType:"text/json",
+			dataType:"text",
+			url:"/apiv1/rooms/last",
+			success:function(data){		
+				
+				var _lastRoomInfo = JSON.parse(data);
+				
+		
+			},
+			error:function(a,b,c){
+			}
+		});
+	
 }
 
 function win()

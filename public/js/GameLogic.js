@@ -190,12 +190,25 @@ function restart()
 				
 				var _lastRoomInfo = JSON.parse(data);
 				
-		
+				if(_lastRoomInfo.me.num_opened==216)
+				{
+					win();
+				}
+				else
+				{
+					var _users = _lastRoomInfo.users;
+					for(var _user in _users)
+					{
+						if(_users[_user].num_opened==216)
+						{
+							lose(_users[_user].name);
+						}
+					}
+				}
 			},
 			error:function(a,b,c){
 			}
 		});
-	
 }
 
 function win()
@@ -212,7 +225,6 @@ function lose(winnerName)
 
 function open(_x,_y)
 {
-	
 	var _data = {operation:"open", x:_y, y:_x};
 	
 	$.ajax({ 

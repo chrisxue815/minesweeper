@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   #TODO
   def require_login
-    username = session[:email]
+    username = session[:username]
     if username
       @user = User.find(username) || User.new(username)
     else

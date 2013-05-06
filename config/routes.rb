@@ -1,10 +1,15 @@
 Minesweeper::Application.routes.draw do
 	root :to => 'index#index'
+
   resources :index, only: [:index]
 
   namespace 'apiv1' do
     resources :rooms, only: [:index, :create, :show, :update, :destroy]
     resources :games, only: [:show, :update]
+  end
+
+  namespace 'auth' do
+    post '/open_id/callback' => 'open_id#callback'
   end
 
   namespace 'test' do

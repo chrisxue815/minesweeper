@@ -57,8 +57,6 @@ class Room
     return if @game.num_opened[username] < Game::NumSafeGrids
 
     @last_game = @game.num_opened
-		
-		puts @last_game
 
     @users.each_value do |item|
       item.ready = false

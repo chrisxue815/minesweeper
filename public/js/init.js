@@ -41,6 +41,11 @@ function mouseup(e)
 									- MineArea_x - (MineArea_width - (Mine_Size*Mine_col))/2;
 		var offset_Y = e.clientY-$('#myCanvas').position().top+window.pageYOffset
 									- MineArea_y - (MineArea_height - (Mine_Size*Mine_row))/2;
+									
+		if(offset_X<0 || offset_X>=Mine_Size*Mine_col || offset_Y<0 || offset_Y>=Mine_Size*Mine_row)
+		{
+			return;
+		}
 		var _x = Math.floor(offset_Y/Mine_Size);
 		var _y = Math.floor(offset_X/Mine_Size);
 		

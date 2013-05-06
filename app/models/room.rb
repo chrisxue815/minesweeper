@@ -48,7 +48,7 @@ class Room
 
     opened = @game.open(username, x, y)
 
-    if @game.num_opened[username] == Game.NumSafeGrids
+    if @game.num_opened[username] == Game::NumSafeGrids
       @last_game = Hash.new
       @users.each do |item|
         @last_game[item.name] = @game.num_opened[item.name]
